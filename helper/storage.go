@@ -3,7 +3,6 @@ package storage
 import (
 	"io/ioutil"
 	"rpi-radio-alarm/logging"
-
 	alarmtypes "rpi-radio-alarm/resources/types"
 
 	"gopkg.in/yaml.v2"

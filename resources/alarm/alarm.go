@@ -5,13 +5,12 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	storage "rpi-radio-alarm/helper"
+	alarmtypes "rpi-radio-alarm/resources/types"
 	"strconv"
 	"time"
 
 	"github.com/gorilla/mux"
-
-	storage "rpi-radio-alarm/helper"
-	alarmtypes "rpi-radio-alarm/resources/types"
 )
 
 // Runner to check consecutive if the radio should be started or not
@@ -53,7 +52,43 @@ func getAlarms(w http.ResponseWriter, r *http.Request) {
 }
 
 func addAlarm(w http.ResponseWriter, r *http.Request) {
-	// TODO: write alarms to file
+	var err error
+
+	storedData, err := storage.GetStoredData()
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		w.Write([]byte(`{"message": "error on getting stored data"}`))
+		return
+	}
+
+	body, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		w.Write([]byte(`{"message": "error on reading body"}`))
+		return
+	}
+
+	var alarm alarmtypes.Alarm
+
+	err = json.Unmarshal(body, &alarm)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		w.Write([]byte(`{"message": "error on unmarshal body"}`))
+		return
+	}
+
+	storedData.Alarms = append(storedData.Alarms, alarm)
+	storage.SaveData(storedData)
+
+	jsonData, err := json.Marshal(storedData.Alarms)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		w.Write([]byte(`{"message": "error on creating json data"}`))
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(jsonData)
 }
 
 func getAlarm(w http.ResponseWriter, r *http.Request) {
@@ -121,9 +156,13 @@ func changeAlarm(w http.ResponseWriter, r *http.Request) {
 	var alarm alarmtypes.Alarm
 
 	err = json.Unmarshal(body, &alarm)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		w.Write([]byte(`{"message": "error on unmarshal body"}`))
+		return
+	}
 
 	storedData.Alarms[alarmIdx] = alarm
-
 	storage.SaveData(storedData)
 
 	jsonData, err := json.Marshal(alarm)
