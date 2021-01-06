@@ -10,7 +10,7 @@ import (
 
 // Settings contains specific settings for the program
 type Settings struct {
-	port int `yaml:"port"`
+	Port int `yaml:"port"`
 }
 
 // RpiRadioAlarmData contains all the data for the RpiRadioAlarm

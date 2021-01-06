@@ -2,34 +2,23 @@ package alarm
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"net/http"
 	storage "rpi-radio-alarm/helper"
 	alarmtypes "rpi-radio-alarm/resources/types"
 	"strconv"
-	"time"
 
 	"github.com/gorilla/mux"
 )
 
-// Runner to check consecutive if the radio should be started or not
-func Runner() {
-	for {
-		fmt.Println("Infinite Loop")
-		time.Sleep(time.Second * 5)
-		// TODO: implement logic
-	}
-}
-
 // SetUpRouter set up router for alarm endpoints
 func SetUpRouter(router *mux.Router) {
-	router.HandleFunc("alarm", getAlarms).Methods(http.MethodGet)
-	router.HandleFunc("alarm", addAlarm).Methods(http.MethodPost)
+	router.HandleFunc("", getAlarms).Methods(http.MethodGet)
+	router.HandleFunc("", addAlarm).Methods(http.MethodPost)
 
-	router.HandleFunc("alarm/{idx}", getAlarm).Methods(http.MethodGet)
-	router.HandleFunc("alarm/{idx}", changeAlarm).Methods(http.MethodPut)
-	router.HandleFunc("alarm/{idx}", deleteAlarm).Methods(http.MethodDelete)
+	router.HandleFunc("/{idx}", getAlarm).Methods(http.MethodGet)
+	router.HandleFunc("/{idx}", changeAlarm).Methods(http.MethodPut)
+	router.HandleFunc("/{idx}", deleteAlarm).Methods(http.MethodDelete)
 }
 
 func getAlarms(w http.ResponseWriter, r *http.Request) {

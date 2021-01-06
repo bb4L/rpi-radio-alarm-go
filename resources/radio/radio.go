@@ -4,17 +4,36 @@ import (
 	"encoding/json"
 	"io/ioutil"
 	"net/http"
-	"os/exec"
+	storage "rpi-radio-alarm/helper"
 	"rpi-radio-alarm/logging"
-	alarmtypes "rpi-radio-alarm/resources/types"
 
 	"github.com/gorilla/mux"
 )
 
 // GetRadio returns the radio
-func GetRadio() alarmtypes.Radio {
-	// TODO: read radio state from file
-	return alarmtypes.Radio{}
+func getRadio(w http.ResponseWriter, r *http.Request) {
+	var err error
+
+	storedData, err := storage.GetStoredData()
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		w.Write([]byte(`{"message": "error on getting stored data"}`))
+		return
+	}
+	jsonData, err := json.Marshal(storedData.Radio)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		w.Write([]byte(`{"message": "error on creating json data"}`))
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(jsonData)
+	return
+}
+
+type changeValue struct {
+	ChangeValue string `json:"switch"`
 }
 
 func postRadio(w http.ResponseWriter, r *http.Request) {
@@ -23,39 +42,43 @@ func postRadio(w http.ResponseWriter, r *http.Request) {
 	b, err := ioutil.ReadAll(r.Body)
 	defer r.Body.Close()
 
-	var msg alarmtypes.Radio
+	var msg changeValue
 	err = json.Unmarshal(b, &msg)
-	logging.GetInfoLogger().Print(b)
-	logging.GetInfoLogger().Print(err)
-	logging.GetInfoLogger().Print(msg)
 	if err != nil {
 		http.Error(w, err.Error(), 500)
 		return
 	}
 
-	// TODO: handle value from body depending on actual value
+	storedData, err := storage.GetStoredData()
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		w.Write([]byte(`{"message": "error on getting stored data"}`))
+		return
+	}
 
-	logging.GetInfoLogger().Print(r.Body)
+	if !storedData.Radio.Running && msg.ChangeValue == "on" {
+		storedData.Radio.StartRadio()
+	}
+
+	if storedData.Radio.Running && msg.ChangeValue == "off" {
+		storedData.Radio.StopRadio()
+	}
+
+	jsonData, err := json.Marshal(storedData.Radio)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		w.Write([]byte(`{"message": "error on creating json data"}`))
+		return
+	}
 
 	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
+	w.Write(jsonData)
+
+	storage.SaveData(storedData)
 }
 
 // SetUpRouter set up router for radio endpoints
 func SetUpRouter(r *mux.Router) {
-	r.HandleFunc("/", postRadio).Methods(http.MethodPost)
-}
-
-func startRadio() {
-	cmd := exec.Command("while true; do (echo \"test\" &&  sleep 5); done")
-	cmd.Stdout = logging.GetInfoLogger().Writer()
-	cmd.Stderr = logging.GetErrorLogger().Writer()
-	err := cmd.Start()
-
-	// cmd.Process.Pid
-	if err != nil {
-		logging.GetFatalLogger().Printf("failed with: %s", err)
-	}
-	// TODO: write pid to file?
-	// TODO: check if file with pid exists
+	r.HandleFunc("", postRadio).Methods(http.MethodPost)
+	r.HandleFunc("", getRadio).Methods(http.MethodGet)
 }

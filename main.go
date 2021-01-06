@@ -3,8 +3,12 @@ package main
 import (
 	"log"
 	"net/http"
+	storage "rpi-radio-alarm/helper"
+	"rpi-radio-alarm/logging"
 	"rpi-radio-alarm/resources/alarm"
 	"rpi-radio-alarm/resources/radio"
+	"rpi-radio-alarm/runner"
+	"strconv"
 
 	"github.com/gorilla/mux"
 )
@@ -16,14 +20,20 @@ func health(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	go alarm.Runner()
+	go runner.Runner()
 
 	r := mux.NewRouter()
-	apiV1 := r.PathPrefix("/api/v1").Subrouter()
-
-	alarm.SetUpRouter(apiV1.PathPrefix("/alarm").Subrouter())
-	radio.SetUpRouter(apiV1.PathPrefix("/radio").Subrouter())
-
 	r.HandleFunc("/health", health).Methods(http.MethodGet)
-	log.Fatal(http.ListenAndServe(":8080", r))
+
+	alarm.SetUpRouter(r.PathPrefix("/alarm").Subrouter())
+	radio.SetUpRouter(r.PathPrefix("/radio").Subrouter())
+
+	storedData, err := storage.GetStoredData()
+	if err != nil {
+		logging.GetFatalLogger().Fatalln("error on getting stored data")
+	}
+
+	port := strconv.Itoa(storedData.Settings.Port)
+	logging.GetInfoLogger().Printf("starting server on port %s", port)
+	log.Fatal(http.ListenAndServe(":"+port, r))
 }
