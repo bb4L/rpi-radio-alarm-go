@@ -23,6 +23,7 @@ type Radio struct {
 
 // StartRadio start the radio
 func (r *Radio) StartRadio() {
+	logging.GetInfoLogger().Printf("Start radio")
 	// TODO: exec command to start radio
 	cmd := exec.Command("while true; do (echo \"test\" &&  sleep 5); done")
 	// cmd := exec.Command("mplayer https://streamingp.shoutcast.com/hotmixradio-sunny-128.mp3 -volume 150")
@@ -35,6 +36,8 @@ func (r *Radio) StartRadio() {
 
 // StopRadio stop the radio
 func (r *Radio) StopRadio() error {
+	logging.GetInfoLogger().Printf("Stop radio")
+
 	var err error
 
 	if r.Pid == -1 {
