@@ -5,7 +5,6 @@ import (
 	"io/ioutil"
 	"net/http"
 	storage "rpi-radio-alarm/helper"
-	"rpi-radio-alarm/logging"
 
 	"github.com/gorilla/mux"
 )
@@ -37,8 +36,6 @@ type changeValue struct {
 }
 
 func postRadio(w http.ResponseWriter, r *http.Request) {
-	logging.GetInfoLogger().Println(r)
-
 	b, err := ioutil.ReadAll(r.Body)
 	defer r.Body.Close()
 
