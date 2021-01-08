@@ -19,10 +19,13 @@ jobs:
         go-version: 1.15
 
     - name: Build linux arm
-      run: env GOOS=linux GOARCH=arm go build -o rpi_radio_alarm_arm -v ./...
+      run: env GOOS=linux GOARCH=arm go build -o build/rpi_radio_alarm_arm
     
     - name: Build linux 64
-      run: env GOOS=linux GOARCH=amd64 go build -o rpi_radio_alarm_64 -v ./...
+      run: env GOOS=linux GOARCH=amd64 go build -o build/rpi_radio_alarm_64
 
-    - name: Test
-      run: go test -v ./...
+    - name: Upload APK
+      uses: actions/upload-artifact@v1
+      with:
+        name: bins
+        path: build/
