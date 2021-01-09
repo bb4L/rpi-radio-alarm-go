@@ -9,6 +9,7 @@ import (
 // Runner to check consecutive if the radio should be started or not
 func Runner() {
 	logging.GetInfoLogger().Println("start runner...")
+	lastShouldRun := false
 	for {
 		// convert that weekday = 0 is monday and not sunday
 		weekdayGo := int(time.Now().Weekday())
@@ -76,18 +77,16 @@ func Runner() {
 
 		logging.GetInfoLogger().Println("Alarms checked")
 
-		if shouldRun != storedData.Radio.Running {
+		if shouldRun != lastShouldRun {
 			if shouldRun {
 				storedData.Radio.StartRadio()
-
-				// TODO: implement a good way to ensure the radio running for 5min if it's a alarm and endless if it's started manually
-
-				// } else {
-				// 	err := storedData.Radio.StopRadio()
-				// 	if err != nil {
-				// 		logging.GetFatalLogger().Printf("Error while stopping radio %s", err)
-				// 	}
+			} else {
+				err := storedData.Radio.StopRadio()
+				if err != nil {
+					logging.GetFatalLogger().Printf("Error while stopping radio %s", err)
+				}
 			}
+			lastShouldRun = shouldRun
 			storage.SaveData(storedData)
 		}
 
