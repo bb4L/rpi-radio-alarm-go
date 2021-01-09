@@ -1,17 +1,16 @@
 # rpi-radio-alarm-go ![CI](https://github.com/bb4L/rpi-radio-alarm-go/workflows/CI/badge.svg)
 Go implementation of a radio alarm clock.
 
-It is ment to be run on a raspberry pi
+This project is ment to be run on a raspberry pi.
 
-This implementation should be compatible to the legacy tools:
-- [android ionic frontend](https://github.com/bb4L/rpi-radio-alarm-frontend)
-- [android native frontend](https://github.com/bb4L/rpi-radio-alarm-android-native)
-- [nim cli](https://github.com/bb4L/rpi-radio-alarm-nim-cli)
-- [telegrambot](https://github.com/bb4L/rpi-radio-alarm-telegrambot)
-- discordbot
-  - [python implementation](https://github.com/bb4L/rpi-radio-alarm-discordbot-python)
-  - [typescript implementation](https://github.com/bb4L/rpi-radio-alarm-discordbot)
-- [python library](https://github.com/bb4L/rpi-radio-alarm-pip)
+It **should** be compatible to the tools for the [original implementation](https://github.com/bb4L/rpi-radio-alarm)
+
+## Requirements
+Ensure that you have `mplayer` installed. ( `apt install mplayer`)
+[mplayer](http://www.mplayerhq.hu/) is used to play the web radio.
+
+## Android app
+a android native app can be found [here](https://github.com/bb4L/rpi-radio-alarm-android-native)
 
 # License
 [GPLv3](LICENSE)
