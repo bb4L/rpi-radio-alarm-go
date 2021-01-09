@@ -28,7 +28,7 @@ func (r *Radio) StartRadio() {
 	}
 	logging.GetInfoLogger().Printf("Start radio")
 
-	cmd := exec.Command("mplayer", "https://streamingp.shoutcast.com/hotmixradio-sunny-128.mp3", "-volume 150")
+	cmd := exec.Command("mplayer", "https://streamingp.shoutcast.com/hotmixradio-sunny-128.mp3", "volume 150")
 	cmd.Stdout = logging.GetInfoLogger().Writer()
 	cmd.Stderr = logging.GetErrorLogger().Writer()
 	cmd.Start()

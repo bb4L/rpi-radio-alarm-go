@@ -48,7 +48,6 @@ func Runner() {
 
 				if sameDay {
 					shouldRun = true
-					// secondsDiff = diff1.Seconds()
 					break
 				}
 			}
@@ -68,14 +67,11 @@ func Runner() {
 
 				if sameDay {
 					shouldRun = true
-					// secondsDiff = diff2.Seconds()
 					break
 				}
 			}
 
 		}
-
-		logging.GetInfoLogger().Println("Alarms checked")
 
 		if shouldRun != lastShouldRun {
 			if shouldRun {
