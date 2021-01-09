@@ -1,4 +1,4 @@
-# rpi-radio-alarm-go
+# rpi-radio-alarm-go ![CI](https://github.com/bb4L/rpi-radio-alarm-go/workflows/CI/badge.svg)
 Go implementation of a radio alarm clock.
 
 It is ment to be run on a raspberry pi
