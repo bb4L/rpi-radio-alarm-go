@@ -5,6 +5,7 @@
 ![GitHub Release Date](https://img.shields.io/github/release-date/bb4l/rpi-radio-alarm-go)
 ![GitHub last commit](https://img.shields.io/github/last-commit/bb4l/rpi-radio-alarm-go)
 ![GitHub](https://img.shields.io/github/license/bb4l/rpi-radio-alarm-go)
+[![Go Report Card](https://goreportcard.com/badge/github.com/bb4L/rpi-radio-alarm-go)](https://goreportcard.com/report/github.com/bb4L/rpi-radio-alarm-go)
 
 Go implementation of a radio alarm clock.
 
