@@ -29,3 +29,13 @@ jobs:
       with:
         name: bins
         path: build/
+
+    - name: Add binaries to release
+      uses: softprops/action-gh-release@v1
+      if: startsWith(github.ref, 'refs/tags/')
+      env:
+        GITHUB_TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
+      with:
+        files: |
+          build/rpi_radio_alarm_64
+          build/rpi_radio_alarm_arm
