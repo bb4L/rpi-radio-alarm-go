@@ -3,12 +3,13 @@ package main
 import (
 	"log"
 	"net/http"
-	storage "rpi-radio-alarm/helper"
-	"rpi-radio-alarm/logging"
-	"rpi-radio-alarm/resources/alarm"
-	"rpi-radio-alarm/resources/radio"
-	"rpi-radio-alarm/runner"
 	"strconv"
+
+	storage "github.com/bb4L/rpi-radio-alarm-go/helper"
+	"github.com/bb4L/rpi-radio-alarm-go/logging"
+	"github.com/bb4L/rpi-radio-alarm-go/resources/alarm"
+	"github.com/bb4L/rpi-radio-alarm-go/resources/radio"
+	"github.com/bb4L/rpi-radio-alarm-go/runner"
 
 	"github.com/gorilla/mux"
 )

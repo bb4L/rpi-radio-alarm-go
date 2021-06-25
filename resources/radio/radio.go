@@ -4,7 +4,8 @@ import (
 	"encoding/json"
 	"io/ioutil"
 	"net/http"
-	storage "rpi-radio-alarm/helper"
+
+	storage "github.com/bb4L/rpi-radio-alarm-go/helper"
 
 	"github.com/gorilla/mux"
 )

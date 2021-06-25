@@ -2,8 +2,10 @@ package storage
 
 import (
 	"io/ioutil"
-	"rpi-radio-alarm/logging"
-	alarmtypes "rpi-radio-alarm/resources/types"
+
+	"github.com/bb4L/rpi-radio-alarm-go/logging"
+
+	alarmtypes "github.com/bb4L/rpi-radio-alarm-go-library/types"
 
 	"gopkg.in/yaml.v2"
 )
@@ -22,7 +24,7 @@ type RpiRadioAlarmData struct {
 
 const dataFilename = "./rpi_data.yaml"
 
-// GetStoredData returns the whole data
+// Returns the whole data
 func GetStoredData() (RpiRadioAlarmData, error) {
 	fileData, err := ioutil.ReadFile(dataFilename)
 
@@ -40,7 +42,7 @@ func GetStoredData() (RpiRadioAlarmData, error) {
 	return data, err
 }
 
-// SaveData save the data to the file
+// Save the data to the file
 func SaveData(data RpiRadioAlarmData) {
 	outSource, err := yaml.Marshal(data)
 	if err != nil {
@@ -48,5 +50,4 @@ func SaveData(data RpiRadioAlarmData) {
 	}
 
 	ioutil.WriteFile(dataFilename, outSource, 0777)
-	return
 }

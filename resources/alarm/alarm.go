@@ -4,14 +4,17 @@ import (
 	"encoding/json"
 	"io/ioutil"
 	"net/http"
-	storage "rpi-radio-alarm/helper"
-	alarmtypes "rpi-radio-alarm/resources/types"
+
+	storage "github.com/bb4L/rpi-radio-alarm-go/helper"
+
+	alarmtypes "github.com/bb4L/rpi-radio-alarm-go-library/types"
+
 	"strconv"
 
 	"github.com/gorilla/mux"
 )
 
-// SetUpRouter set up router for alarm endpoints
+// Set up router for alarm endpoints
 func SetUpRouter(router *mux.Router) {
 	router.HandleFunc("", getAlarms).Methods(http.MethodGet)
 	router.HandleFunc("", addAlarm).Methods(http.MethodPost)

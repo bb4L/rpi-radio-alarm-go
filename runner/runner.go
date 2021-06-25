@@ -1,9 +1,11 @@
 package runner
 
 import (
-	storage "rpi-radio-alarm/helper"
-	"rpi-radio-alarm/logging"
 	"time"
+
+	"github.com/bb4L/rpi-radio-alarm-go/logging"
+
+	storage "github.com/bb4L/rpi-radio-alarm-go/helper"
 )
 
 // Runner to check consecutive if the radio should be started or not

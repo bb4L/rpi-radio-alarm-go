@@ -1,3 +1,4 @@
+// Package including some logging utilities
 package logging
 
 import (
@@ -5,6 +6,8 @@ import (
 	"os"
 	"sync"
 )
+
+const commonPrefix = "[rpi-radio-alarm-go] "
 
 var (
 	// InfoLogger logging info
@@ -19,17 +22,26 @@ var (
 	once sync.Once
 )
 
-// GetInfoLogger returns the InfoLogger
+// Get the InfoLogger
 func GetInfoLogger() *log.Logger {
-	return log.New(os.Stderr, "INFO: ", log.Ldate|log.Ltime|log.Lmsgprefix)
+	once.Do(func() {
+		InfoLogger = log.New(os.Stderr, commonPrefix+"INFO: ", log.Ldate|log.Ltime|log.Lmsgprefix)
+	})
+	return InfoLogger
 }
 
-// GetErrorLogger returns the ErrorLogger
+// Get the ErrorLogger
 func GetErrorLogger() *log.Logger {
-	return log.New(os.Stderr, "ERROR: ", log.Ldate|log.Ltime|log.Lmsgprefix)
+	once.Do(func() {
+		ErrorLogger = log.New(os.Stderr, commonPrefix+"ERROR: ", log.Ldate|log.Ltime|log.Lmsgprefix)
+	})
+	return ErrorLogger
 }
 
-// GetFatalLogger returns the FatalLogger
+// Get the FatalLogger
 func GetFatalLogger() *log.Logger {
-	return log.New(os.Stderr, "FATAL: ", log.Ldate|log.Ltime|log.Lmsgprefix)
+	once.Do(func() {
+		FatalLogger = log.New(os.Stderr, commonPrefix+"FATAL: ", log.Ldate|log.Ltime|log.Lmsgprefix)
+	})
+	return FatalLogger
 }
