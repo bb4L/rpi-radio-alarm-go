@@ -2,6 +2,7 @@ package main
 
 import (
 	"os"
+	"strconv"
 
 	"github.com/bb4L/rpi-radio-alarm-go-library/api"
 	"github.com/bb4L/rpi-radio-alarm-go-library/storage"
@@ -30,7 +31,7 @@ func main() {
 	}
 
 	if settings.RunTelegrambot {
-		apiHelper := api.Helper{AlarmURL: "http://localhost:8000", ExtraHeader: "", ExtreaHeaderValue: ""}
+		apiHelper := api.Helper{AlarmURL: "http://localhost:" + strconv.Itoa(settings.Port), ExtraHeader: "", ExtreaHeaderValue: ""}
 		go bot.StartTelegramBot(&apiHelper)
 	}
 
