@@ -96,12 +96,15 @@ func getAlarm(w http.ResponseWriter, r *http.Request) {
 	// TODO: move the parseIdx inside the storage helper
 	alarmIdx, errIdx := helper.ParseIdx(w, pathParams, alarms)
 	if errIdx != nil {
-		logger.Printf("Received error: %s", errIdx)
-		logger.Println(errIdx)
+		logger.Printf("Received error: %s\n", errIdx)
 		return
 	}
 
 	alarm, err := storageHelper.GetAlarm(alarmIdx, false)
+	if err != nil {
+		helper.HandleStorageError(w, err)
+		return
+	}
 
 	jsonData, err := json.Marshal(alarm)
 	if err != nil {
