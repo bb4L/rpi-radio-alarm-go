@@ -53,7 +53,6 @@ type changeValue struct {
 
 func postRadio(w http.ResponseWriter, r *http.Request) {
 	radio, err := storageHelper.GetRadio(false)
-	defer storageHelper.SaveRadio(radio)
 
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
@@ -83,6 +82,8 @@ func postRadio(w http.ResponseWriter, r *http.Request) {
 	if radio.Running && msg.ChangeValue == "off" {
 		radio.StopRadio()
 	}
+
+	storageHelper.SaveRadio(radio)
 
 	jsonData, err := json.Marshal(radio)
 	if err != nil {
