@@ -1,11 +1,16 @@
 # rpi-radio-alarm-go 
 ![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/bb4l/rpi-radio-alarm-go)
-![CI](https://github.com/bb4L/rpi-radio-alarm-go/workflows/CI/badge.svg)
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/bb4l/rpi-radio-alarm-go)
 ![GitHub Release Date](https://img.shields.io/github/release-date/bb4l/rpi-radio-alarm-go)
 ![GitHub last commit](https://img.shields.io/github/last-commit/bb4l/rpi-radio-alarm-go)
+[![Go Reference](https://pkg.go.dev/badge/github.com/bb4L/rpi-radio-alarm-go.svg)](https://pkg.go.dev/github.com/bb4L/rpi-radio-alarm-go)
 ![GitHub](https://img.shields.io/github/license/bb4l/rpi-radio-alarm-go)
 [![Go Report Card](https://goreportcard.com/badge/github.com/bb4L/rpi-radio-alarm-go)](https://goreportcard.com/report/github.com/bb4L/rpi-radio-alarm-go)
+
+![CI](https://github.com/bb4L/rpi-radio-alarm-go/workflows/CI/badge.svg)
+![GitHub issues](https://img.shields.io/github/issues-raw/bb4l/rpi-radio-alarm-go)
+![Lines of code](https://img.shields.io/tokei/lines/github/bb4l/rpi-radio-alarm-go)
+
 
 Go implementation of a radio alarm clock.
 
