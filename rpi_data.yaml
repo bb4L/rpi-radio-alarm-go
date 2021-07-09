@@ -1,24 +1,23 @@
 settings:
   port: 8000
-
+  run_api: true
+  run_telegram_bot: true
+  run_discord_bot: false
 alarms:
-  -
-    name: "Test"
-    hour: 7
-    minute: 0
-    days:
-      - 0
-      - 1
-    on: False
-  -
-    name: "Test2"
-    hour: 9
-    minute: 15
-    days:
-      - 0
-      - 1
-    on: False
-
+- name: Test
+  hour: 7
+  minute: 0
+  days:
+  - 0
+  - 1
+  active: false
+- name: Test2
+  hour: 9
+  minute: 15
+  days:
+  - 0
+  - 1
+  active: false
 radio:
+  running: false
   pid: -1
-  running: False

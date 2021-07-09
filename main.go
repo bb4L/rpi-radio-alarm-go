@@ -1,40 +1,44 @@
 package main
 
 import (
-	"log"
-	"net/http"
-	"strconv"
+	"os"
 
-	storage "github.com/bb4L/rpi-radio-alarm-go/helper"
-	"github.com/bb4L/rpi-radio-alarm-go/logging"
-	"github.com/bb4L/rpi-radio-alarm-go/resources/alarm"
-	"github.com/bb4L/rpi-radio-alarm-go/resources/radio"
+	"github.com/bb4L/rpi-radio-alarm-go-library/api"
+	"github.com/bb4L/rpi-radio-alarm-go-library/storage"
+	server "github.com/bb4L/rpi-radio-alarm-go/apiserver"
+	"github.com/bb4L/rpi-radio-alarm-go/constants"
+
+	"github.com/bb4L/rpi-radio-alarm-go-library/logging"
 	"github.com/bb4L/rpi-radio-alarm-go/runner"
-
-	"github.com/gorilla/mux"
+	bot "github.com/bb4L/rpi-radio-alarm-telegrambot-go/bot"
 )
 
-func health(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
-	w.Write([]byte(`{"status": "healthy"}`))
-}
+var logger = logging.GetLogger(os.Stdout, constants.DefaultPrefix, "main")
+var storageHelper storage.Helper = storage.Helper{}
 
 func main() {
-	go runner.Runner()
 
-	r := mux.NewRouter()
-	r.HandleFunc("/health", health).Methods(http.MethodGet)
+	settings, err := storageHelper.GetSettings()
 
-	alarm.SetUpRouter(r.PathPrefix("/alarm").Subrouter())
-	radio.SetUpRouter(r.PathPrefix("/radio").Subrouter())
-
-	storedData, err := storage.GetStoredData()
 	if err != nil {
-		logging.GetFatalLogger().Fatalln("error on getting stored data")
+		logger.Fatalln("error on getting stored data")
 	}
 
-	port := strconv.Itoa(storedData.Settings.Port)
-	logging.GetInfoLogger().Printf("starting server on port %s", port)
-	log.Fatal(http.ListenAndServe(":"+port, r))
+	if settings.RunAPI {
+		logger.Println("start api server")
+		go server.StartAPIServer(&storageHelper)
+	}
+
+	if settings.RunTelegrambot {
+		apiHelper := api.Helper{AlarmURL: "http://localhost:8000", ExtraHeader: "", ExtreaHeaderValue: ""}
+		go bot.StartTelegramBot(&apiHelper)
+	}
+
+	if settings.RunDiscordbot {
+		go func() {
+			logger.Println("run dicordbot")
+		}()
+	}
+
+	runner.Runner(&storageHelper)
 }
