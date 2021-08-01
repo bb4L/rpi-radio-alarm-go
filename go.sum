@@ -1,8 +1,7 @@
-github.com/bb4L/rpi-radio-alarm-go-library v1.1.0/go.mod h1:CoLteHtD4w9o0q78+CMECqQPsObKbOsnNDN1pO3PqYk=
-github.com/bb4L/rpi-radio-alarm-go-library v1.1.1 h1:GVRv6W/WG/MnKaMwMN/AvzS8LBS9CNkM5Qg0RBPNXBc=
-github.com/bb4L/rpi-radio-alarm-go-library v1.1.1/go.mod h1:CoLteHtD4w9o0q78+CMECqQPsObKbOsnNDN1pO3PqYk=
-github.com/bb4L/rpi-radio-alarm-telegrambot-go v1.0.3 h1:EcRycaYr3v3cXUTSqnvW9349Y1FMAudR+rv7zc56ung=
-github.com/bb4L/rpi-radio-alarm-telegrambot-go v1.0.3/go.mod h1:agYEi3WLFdpyj5OkcWZtsQ1pxqJnMfP9RZw4RXkxvdY=
+github.com/bb4L/rpi-radio-alarm-go-library v1.1.2 h1:yrVFP37Gpq0uGVlH3oEAtXP3lS5RsyJGRjbI4HNKT00=
+github.com/bb4L/rpi-radio-alarm-go-library v1.1.2/go.mod h1:CoLteHtD4w9o0q78+CMECqQPsObKbOsnNDN1pO3PqYk=
+github.com/bb4L/rpi-radio-alarm-telegrambot-go v1.0.4 h1:MYlLtCBYi1fVOoT6ug5bLJr1NCvhMF3icaGLTIwPD7M=
+github.com/bb4L/rpi-radio-alarm-telegrambot-go v1.0.4/go.mod h1:irgzDOjTlaYzaNjHnRe/8apBpPW7a28sOjF69DZwhWM=
 github.com/davecgh/go-spew v1.1.0 h1:ZDRjVQ15GmhC3fiQ8ni8+OwkZQO4DARzQgrnXU1Liz8=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/gorilla/mux v1.8.0 h1:i40aqfkR1h2SlN9hojwV5ZA91wcXFOvkdNIeFDP5koI=
