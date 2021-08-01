@@ -75,7 +75,7 @@ func TestApi(t *testing.T) {
 		{name: "get alarm 1", r: newreq("GET", ts.URL+"/alarm/1", nil), expectedStatus: 200, expectedData: alarm2Json},
 		{name: "get alarm 2", r: newreq("GET", ts.URL+"/alarm/2", nil), expectedStatus: 400, expectedData: []byte(`{"message": "index not valid 2"}`)},
 		{name: "get radio", r: newreq("GET", ts.URL+"/radio", nil), expectedStatus: 200, expectedData: result2},
-		{name: "add alarm", r: newreq("POST", ts.URL+"/alarm", bytes.NewReader(alarm3Json)), expectedStatus: 200, expectedData: resultAddAlarm},
+		{name: "add alarm", r: newreq("POST", ts.URL+"/alarm", bytes.NewReader(alarm3Json)), expectedStatus: 201, expectedData: resultAddAlarm},
 
 		{name: "change alarm", r: newreq("PUT", ts.URL+"/alarm/0", bytes.NewReader(alarm3ChangedJSON)), expectedStatus: 200, expectedData: alarm3ChangedJSON},
 		{name: "rechange alarm", r: newreq("PUT", ts.URL+"/alarm/0", bytes.NewReader(alarm1Json)), expectedStatus: 200, expectedData: alarm1Json},

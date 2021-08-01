@@ -87,21 +87,3 @@ func checkIfShoulBeRunning(diff time.Duration, weekday int, alarm types.Alarm) (
 	}
 	return
 }
-
-// func changeRunning(storageHelper *storage.StorageHelper, shouldRun bool) {
-
-// 	storedData, err := storageHelper.GetStoredData(true)
-// 	if err != nil {
-// 		logger.Fatalf("Error while loading data: %s", err)
-// 	}
-// 	if shouldRun {
-// 		storedData.Radio.StartRadio()
-// 	} else {
-// 		err := storedData.Radio.StopRadio()
-// 		if err != nil {
-// 			logger.Printf("Error while stopping radio %s", err)
-// 		}
-// 	}
-
-// 	storageHelper.SaveStoredData(storedData)
-// }
